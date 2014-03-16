@@ -57,7 +57,9 @@ at top level because they are callables.
 
     >>> import sys
     >>> from printobject import pp
+
     >>> pp(sys.modules[__name__])
+
     {'___name___': '__main__',
      '___type___': '<module {id0}>',
      '__builtins__': <module 'builtins' (built-in)>,
@@ -179,3 +181,69 @@ Old style classes (Python 2.x only)
      '___type___': '<classobj {id0}>',
      '__module__': "'__main__'",
      'classatt': "'hidden'"}
+
+
+Old style instances (Python 2.x only)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Instances of old style classes don't look much different from 
+instances of new style classes. The difference is that they 
+identity as ``instance`` type, which is visible in the 
+``___type___`` value.
+
+.. code:: python
+
+    >>> a, b, c, d = Node('A'), Node('B'), Node('C'), Node('D')
+    >>> a.refs = [b, d]
+    >>> b.refs = [c]
+    >>> c.refs = [a]
+    >>> d.refs = [c]
+    >>> pp(a)
+
+    {'___type___': '<instance {id0}>',
+     '__module__': "'__main__'",
+     'classatt': "'hidden'",
+     'name': "'A'",
+     'refs': [{'___type___': '<instance {id1}>',
+               '__module__': "'__main__'",
+               'classatt': "'hidden'",
+               'name': "'B'",
+               'refs': [{'___type___': '<instance {id2}>',
+                         '__module__': "'__main__'",
+                         'classatt': "'hidden'",
+                         'name': "'C'",
+                         'refs': ['dup <instance {id0}>']}]},
+              {'___type___': '<instance {id3}>',
+               '__module__': "'__main__'",
+               'classatt': "'hidden'",
+               'name': "'D'",
+               'refs': [{'___type___': '<instance {id2}>',
+                         '__module__': "'__main__'",
+                         'classatt': "'hidden'",
+                         'name': "'C'",
+                         'refs': ['dup <instance {id0}>']}]}]}
+
+In collapsed form:
+
+.. code:: python
+
+    >>> pp(a, collapse_duplicates=True)
+
+    {'___type___': '<instance {id0}>',
+     '__module__': "'__main__'",
+     'classatt': "'hidden'",
+     'name': "'A'",
+     'refs': [{'___type___': '<instance {id1}>',
+               '__module__': "'__main__'",
+               'classatt': "'hidden'",
+               'name': "'B'",
+               'refs': [{'___type___': '<instance {id2}>',
+                         '__module__': "'__main__'",
+                         'classatt': "'hidden'",
+                         'name': "'C'",
+                         'refs': ['dup <instance {id0}>']}]},
+            {'___type___': '<instance {id3}>',
+             '__module__': "'__main__'",
+             'classatt': "'hidden'",
+             'name': "'D'",
+             'refs': ['dup <instance {id2}>']}]}
