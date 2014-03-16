@@ -1,14 +1,15 @@
 # Author: Martin Matusiak <numerodix@gmail.com>
 
+from __future__ import absolute_import
+
+import pprint
+import types
+
 
 __all__ = [
     'Dumper',
     'pp',
 ]
-
-
-import pprint
-import types
 
 
 try:
