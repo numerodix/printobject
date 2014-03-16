@@ -143,7 +143,7 @@ In the example above ``c`` is printed in expanded form twice, because both
 occurrences are found at the same level of recursion. This can make the output
 quite verbose if the same object is referenced numerous times, so an
 alternative is to expand it only the first time and emit ``dup`` entries
-subsequently, as below.
+subsequently, as shown below.
 
 
 .. code:: python
