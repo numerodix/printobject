@@ -107,6 +107,13 @@ Classes
 Instances
 ^^^^^^^^^
 
+Object graphs often aren't fully acyclic. Where cycles exist it usually doesn't
+make sense to unroll them, so an object encountered more than once is displayed
+with the ``dup`` tag.  Objects also get assigned id's, so that in the case
+below it's clear that ``dup <Node {id0}>``, which appears in the ``refs``
+attribute of ``c``, is referring back to ``a``.
+
+
 .. code:: python
 
     >>> a, b, c, d = Node('A'), Node('B'), Node('C'), Node('D')
@@ -118,15 +125,38 @@ Instances
     >>> from printobject import pp
     >>> pp(a)
 
-    >>> {'___type___': '<Node {id0}>',
-    >>>  'name': "'A'",
-    >>>  'refs': [{'___type___': '<Node {id1}>',
-    >>>            'name': "'B'",
-    >>>            'refs': [{'___type___': '<Node {id2}>',
-    >>>                      'name': "'C'",
-    >>>                      'refs': ['dup <Node {id0}>']}]},
-    >>>           {'___type___': '<Node {id3}>',
-    >>>            'name': "'D'",
-    >>>            'refs': [{'___type___': '<Node {id2}>',
-    >>>                      'name': "'C'",
-    >>>                      'refs': ['dup <Node {id0}>']}]}]}
+    {'___type___': '<Node {id0}>',
+     'name': "'A'",
+     'refs': [{'___type___': '<Node {id1}>',
+               'name': "'B'",
+               'refs': [{'___type___': '<Node {id2}>',
+                         'name': "'C'",
+                         'refs': ['dup <Node {id0}>']}]},
+              {'___type___': '<Node {id3}>',
+               'name': "'D'",
+               'refs': [{'___type___': '<Node {id2}>',
+                         'name': "'C'",
+                         'refs': ['dup <Node {id0}>']}]}]}
+
+
+In the example above ``c`` is printed in expanded form twice, because both
+occurrences are found at the same level of recursion. This can make the output
+quite verbose if the same object is referenced numerous times, so an
+alternative is to expand it only the first time and emit ``dup`` entries
+subsequently, as shown below.
+
+
+.. code:: python
+
+    >>> pp(a, collapse_duplicates=True)
+
+    {'___type___': '<Node {id0}>',
+     'name': "'A'",
+     'refs': [{'___type___': '<Node {id1}>',
+               'name': "'B'",
+               'refs': [{'___type___': '<Node {id2}>',
+                         'name': "'C'",
+                         'refs': ['dup <Node {id0}>']}]},
+              {'___type___': '<Node {id3}>',
+               'name': "'D'",
+               'refs': ['dup <Node {id2}>']}]}
