@@ -103,10 +103,13 @@ class Dumper(object):
     def dump_instance(self, obj, visited, norec=False):
         atts = self.get_own_atts(obj)
         ret = {}
+
         name = self.get_object_name(obj)
         if name:
-            ret['__name__'] = name
-        ret['__type__'] = self.get_type_name(obj)
+            ret['___name___'] = name
+
+        ret['___type___'] = self.get_type_name(obj)
+
         for att in atts:
             val = getattr(obj, att)
             ret[att] = val
