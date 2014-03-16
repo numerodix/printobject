@@ -5,6 +5,8 @@ from printobject import Dumper
 from printobject import pp
 
 
+################################################
+
 def test_module(heading="Module"):
     return sys.modules[__name__]
 
@@ -112,6 +114,13 @@ tests = [
 ]
 
 
+def get_defaults(func):
+    try:
+        return func.func_defaults
+    except AttributeError:
+        return func.__defaults__
+
+
 def runtest(obj, heading, doc, *args, **kw):
     name = Dumper().get_object_name(obj)
     s = "#" * 78 + "\n"
@@ -130,5 +139,5 @@ def runtest(obj, heading, doc, *args, **kw):
 
 if __name__ == '__main__':
     for testfunc in tests:
-        runtest(testfunc(), testfunc.func_defaults[0], testfunc.__doc__,
-                testfunc.func_defaults[1:])
+        defaults = get_defaults(testfunc)
+        runtest(testfunc(), defaults[0], testfunc.__doc__, defaults[1:])
