@@ -12,6 +12,12 @@ import re
 import types
 
 
+try:
+    basestring = basestring
+except NameError:
+    basestring = str
+
+
 class Dumper(object):
     def __init__(self, collapse_duplicates=False):
         self.index = {}
