@@ -111,7 +111,8 @@ Object graphs often aren't fully acyclic. Where cycles exist
 it usually doesn't make sense to unroll them, so an object
 encountered more than once is displayed with the ``dup`` tag.
 Objects also get assigned id's, so that in the case below it's
-clear that ``dup <Node {id0}>`` is referring to ``a``.
+clear that ``dup <Node {id0}>``, which appears in the ``refs``
+attribute of ``c``, is referring back to ``a``.
 
 
 .. code:: python
