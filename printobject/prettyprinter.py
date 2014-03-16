@@ -8,7 +8,6 @@ __all__ = [
 
 
 import pprint
-import re
 import types
 
 
@@ -27,7 +26,8 @@ class Dumper(object):
         try:
             hash(obj)
             return True
-        except TypeError: pass
+        except TypeError:
+            pass
 
     def is_iterable(self, obj):
         '''strings are iterable too, therefore check against basestring'''
@@ -35,25 +35,26 @@ class Dumper(object):
             try:
                 iter(obj)
                 return True
-            except TypeError: pass
+            except TypeError:
+                pass
 
     def has_repr(self, obj):
         # short circuit here to prevent eval on module
-        if type(obj) == types.ModuleType:
+        if isinstance(obj, types.ModuleType):
             return True
 
         try:
             eval(repr(obj))
             return True
-        except: pass
+        except:
+            pass
 
     def is_reference_type(self, obj):
         return self.is_hashable(obj) and not self.has_repr(obj)
 
     def is_dicty(self, obj):
-        if hasattr(obj, 'keys') and obj.keys(): # if no keys do iter
+        if hasattr(obj, 'keys') and obj.keys():  # if no keys do iter
             return True
-
 
     def get_object_id(self, obj):
         if obj not in self.index:
@@ -79,11 +80,11 @@ class Dumper(object):
 
         # filter callables
         # check for obj.member.__call__
-        atts_instance = filter(lambda m: not hasattr(getattr(obj, m), '__call__'),
-                               atts_instance)
+        atts_instance = filter(
+            lambda m: not hasattr(getattr(obj, m), '__call__'),
+            atts_instance)
 
         return atts_instance
-
 
     def dump_dicty(self, obj, visited):
         dct = {}
@@ -113,7 +114,7 @@ class Dumper(object):
         return ret
 
     def dump_repr(self, obj, visited):
-        if type(obj) == types.ModuleType:
+        if isinstance(obj, types.ModuleType):
             return self.dump_instance(obj, visited, norec=True)
 
         return repr(obj)
