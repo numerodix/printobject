@@ -109,6 +109,7 @@ class Dumper(object):
     def dump_repr(self, obj, visited):
         if type(obj) == types.ModuleType:
             return self.dump_instance(obj, visited, norec=True)
+
         return repr(obj)
 
     def dump_main(self, obj, visited):
@@ -133,6 +134,7 @@ class Dumper(object):
 
     def dump(self, obj):
         return self.dump_main(obj, set())
+
 
 def pp(st, collapse_duplicates=False):
     """Generic pretty print function to visualize object data recursively with

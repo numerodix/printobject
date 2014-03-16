@@ -75,7 +75,8 @@ def test_method(heading="Method"):
     return Dumper.dump
 
 def test_lambda(heading="Lambda"):
-    return lambda x:x
+    return lambda x: x
+
 
 ################################################
 
@@ -110,9 +111,10 @@ tests = [
     test_generator,
 ]
 
+
 def runtest(obj, heading, doc, *args, **kw):
     name = Dumper().get_object_name(obj)
-    s = "#"*78 + "\n"
+    s = "#" * 78 + "\n"
     s += " :%s\n" % heading
     if doc:
         s += " > %s\n" % re.sub('\s{2,}', ' ', doc)
@@ -120,7 +122,7 @@ def runtest(obj, heading, doc, *args, **kw):
     if name:
         s += ' Name: %s\n' % name
     s += " Type: %s\n" % type(obj).__name__
-    s += "-"*78
+    s += "-" * 78
     print(s)
     pp(obj, *args, **kw)
     print('\n')
