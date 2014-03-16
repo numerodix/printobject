@@ -57,7 +57,9 @@ at top level because they are callables.
 
     >>> import sys
     >>> from printobject import pp
+
     >>> pp(sys.modules[__name__])
+
     {'___name___': '__main__',
      '___type___': '<module {id0}>',
      '__builtins__': <module 'builtins' (built-in)>,
@@ -90,9 +92,9 @@ Classes
 .. code:: python
 
     >>> class Node(object):
-    >>>     classatt = 'hidden'
-    >>>     def __init__(self, name):
-    >>>         self.name = name
+    ...     classatt = 'hidden'
+    ...     def __init__(self, name):
+    ...         self.name = name
 
     >>> from printobject import pp
     >>> pp(Node)
@@ -160,3 +162,159 @@ subsequently, as shown below.
               {'___type___': '<Node {id3}>',
                'name': "'D'",
                'refs': ['dup <Node {id2}>']}]}
+
+
+Old style classes (Python 2.x only)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: python
+
+    >>> class Node():
+    ...     classatt = 'hidden'
+    ...     def __init__(self, name):
+    ...         self.name = name
+
+    >>> from printobject import pp
+    >>> pp(Node)
+
+    {'___name___': 'Node',
+     '___type___': '<classobj {id0}>',
+     '__module__': "'__main__'",
+     'classatt': "'hidden'"}
+
+
+Old style instances (Python 2.x only)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Instances of old style classes don't look much different from 
+instances of new style classes. The difference is that they 
+identity as ``instance`` type, which is visible in the 
+``___type___`` value.
+
+.. code:: python
+
+    >>> a, b, c, d = Node('A'), Node('B'), Node('C'), Node('D')
+    >>> a.refs = [b, d]
+    >>> b.refs = [c]
+    >>> c.refs = [a]
+    >>> d.refs = [c]
+
+    >>> from printobject import pp
+    >>> pp(a)
+
+    {'___type___': '<instance {id0}>',
+     '__module__': "'__main__'",
+     'classatt': "'hidden'",
+     'name': "'A'",
+     'refs': [{'___type___': '<instance {id1}>',
+               '__module__': "'__main__'",
+               'classatt': "'hidden'",
+               'name': "'B'",
+               'refs': [{'___type___': '<instance {id2}>',
+                         '__module__': "'__main__'",
+                         'classatt': "'hidden'",
+                         'name': "'C'",
+                         'refs': ['dup <instance {id0}>']}]},
+              {'___type___': '<instance {id3}>',
+               '__module__': "'__main__'",
+               'classatt': "'hidden'",
+               'name': "'D'",
+               'refs': [{'___type___': '<instance {id2}>',
+                         '__module__': "'__main__'",
+                         'classatt': "'hidden'",
+                         'name': "'C'",
+                         'refs': ['dup <instance {id0}>']}]}]}
+
+In collapsed form:
+
+.. code:: python
+
+    >>> pp(a, collapse_duplicates=True)
+
+    {'___type___': '<instance {id0}>',
+     '__module__': "'__main__'",
+     'classatt': "'hidden'",
+     'name': "'A'",
+     'refs': [{'___type___': '<instance {id1}>',
+               '__module__': "'__main__'",
+               'classatt': "'hidden'",
+               'name': "'B'",
+               'refs': [{'___type___': '<instance {id2}>',
+                         '__module__': "'__main__'",
+                         'classatt': "'hidden'",
+                         'name': "'C'",
+                         'refs': ['dup <instance {id0}>']}]},
+            {'___type___': '<instance {id3}>',
+             '__module__': "'__main__'",
+             'classatt': "'hidden'",
+             'name': "'D'",
+             'refs': ['dup <instance {id2}>']}]}
+
+
+Callables
+^^^^^^^^^
+
+Callables can also be printed, but they are less interesting since they
+have no public attributes.
+
+
+Functions:
+
+.. code:: python
+
+    >>> from printobject import pp
+    >>> pp(pp)
+    {'___name___': 'pp', '___type___': '<function {id0}>'}
+
+
+Methods:
+
+.. code:: python
+
+    >>> from printobject import Dumper
+    >>> pp(Dumper.dump)
+    {'___name___': 'dump', '___type___': '<instancemethod {id0}>'}
+
+
+Lambdas:
+
+.. code:: python
+
+    >>> pp(lambda x: x)
+    {'___name___': '<lambda>', '___type___': '<function {id0}>'}
+
+
+Iterables
+^^^^^^^^^
+
+Iterables are printed using their normal ``__repr__``. In this case
+there are no ``___type___`` and ``___name___`` attributes synthesized
+in the output.
+
+.. code:: python
+
+
+    >>> it = frozenset(range(10))
+
+    >>> from printobject import pp
+    >>> pp(it)
+
+    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+
+Generators
+^^^^^^^^^^
+
+Generators are a special case of iterables, because the values are
+created dynamically. Printing generators isn't insightful without
+unrolling them, so they will be materialized first. But this means that
+if the generator is infinite the function will never return.
+
+.. code:: python
+
+    >>> gen = (x for x in range(10))
+
+    >>> from printobject import pp
+    >>> pp(gen)
+
+    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
