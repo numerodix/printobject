@@ -118,15 +118,31 @@ Instances
     >>> from printobject import pp
     >>> pp(a)
 
-    >>> {'___type___': '<Node {id0}>',
-    >>>  'name': "'A'",
-    >>>  'refs': [{'___type___': '<Node {id1}>',
-    >>>            'name': "'B'",
-    >>>            'refs': [{'___type___': '<Node {id2}>',
-    >>>                      'name': "'C'",
-    >>>                      'refs': ['dup <Node {id0}>']}]},
-    >>>           {'___type___': '<Node {id3}>',
-    >>>            'name': "'D'",
-    >>>            'refs': [{'___type___': '<Node {id2}>',
-    >>>                      'name': "'C'",
-    >>>                      'refs': ['dup <Node {id0}>']}]}]}
+    {'___type___': '<Node {id0}>',
+     'name': "'A'",
+     'refs': [{'___type___': '<Node {id1}>',
+               'name': "'B'",
+               'refs': [{'___type___': '<Node {id2}>',
+                         'name': "'C'",
+                         'refs': ['dup <Node {id0}>']}]},
+              {'___type___': '<Node {id3}>',
+               'name': "'D'",
+               'refs': [{'___type___': '<Node {id2}>',
+                         'name': "'C'",
+                         'refs': ['dup <Node {id0}>']}]}]}
+
+
+.. code:: python
+
+    >>> pp(a, collapse_duplicates=True)
+
+    {'___type___': '<Node {id0}>',
+     'name': "'A'",
+     'refs': [{'___type___': '<Node {id1}>',
+               'name': "'B'",
+               'refs': [{'___type___': '<Node {id2}>',
+                         'name': "'C'",
+                         'refs': ['dup <Node {id0}>']}]},
+              {'___type___': '<Node {id3}>',
+               'name': "'D'",
+               'refs': ['dup <Node {id2}>']}]}
