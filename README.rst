@@ -49,6 +49,10 @@ Key points:
 Modules
 ^^^^^^^
 
+This modules defines a number of ``test_xxx`` functions at module level. They
+are included in a ``tests`` list and visible in the output, but not listed
+at top level because they are callables.
+
 .. code:: python
 
     >>> import sys
