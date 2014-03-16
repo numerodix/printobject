@@ -282,3 +282,34 @@ Lambdas:
 
     >>> pp(lambda x: x)
     {'___name___': '<lambda>', '___type___': '<function {id0}>'}
+
+
+Iterables
+^^^^^^^^^
+
+Iterables are printed using their normal ``__repr__``. In this case
+there are no ``___type___`` and ``___name___`` attributes synthesized
+in the output.
+
+.. code:: python
+
+    >>> from printobject import Dumper
+    >>> it = frozenset(range(10))
+    >>> pp(it)
+
+    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+
+Generators
+^^^^^^^^^^
+
+Generators are a special case of iterables, because the values are
+created dynamically. Printing generators isn't insightful without
+unrolling them, so they will be materialized first. But this means that
+if the generator is infinite the function will never return.
+
+.. code:: python
+
+    >>> gen = (x for x in range(10))
+    >>> pp(gen)
+    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
