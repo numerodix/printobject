@@ -90,9 +90,9 @@ Classes
 .. code:: python
 
     >>> class Node(object):
-    >>>     classatt = 'hidden'
-    >>>     def __init__(self, name):
-    >>>         self.name = name
+    ...     classatt = 'hidden'
+    ...     def __init__(self, name):
+    ...         self.name = name
 
     >>> from printobject import pp
     >>> pp(Node)
@@ -160,3 +160,22 @@ subsequently, as shown below.
               {'___type___': '<Node {id3}>',
                'name': "'D'",
                'refs': ['dup <Node {id2}>']}]}
+
+
+Old style classes (Python 2.x only)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: python
+
+    >>> class Node():
+    ...     classatt = 'hidden'
+    ...     def __init__(self, name):
+    ...         self.name = name
+
+    >>> from printobject import pp
+    >>> pp(Node)
+
+    {'___name___': 'Node',
+     '___type___': '<classobj {id0}>',
+     '__module__': "'__main__'",
+     'classatt': "'hidden'"}
