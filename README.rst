@@ -25,6 +25,25 @@ Installation
 Usage
 -----
 
+The standard library ``pprint`` module is great at visualizing all kinds of
+built-in types like lists, dicts and tuples. But it does not attempt to
+introspect user defined types. This is where ``printobject`` comes in. It
+dumps the internals of any object as a dict, and pretty prints using
+``pprint``.
+
+Key points:
+
+- Any type of object can printed, but depending on the type the output
+  will be more or less insightful.
+- Object introspection is based on the use of ``dir`` rather than ``__dict__``
+  directly.
+- Object attributes only include attributes owned by the object, omitting
+  class attributes.
+- Callables are omitted when introspecting objects. The goal is to visualize
+  the data in objects.
+- The synthetic attributes ``___name___`` and ``___type___`` are included
+  so as to provide some metadata about the object being printed.
+
 
 Modules
 ^^^^^^^
@@ -35,26 +54,26 @@ Modules
     >>> from printobject import pp
     >>> pp(sys.modules[__name__])
     {'___name___': '__main__',
-    '___type___': '<module {id0}>',
-    '__builtins__': <module 'builtins' (built-in)>,
-    '__cached__': None,
-    '__file__': '/home/user/code/printobject/printobject/demos.py',
-    '__loader__': <_frozen_importlib.SourceFileLoader object at 0xb71c520c>,
-    '__name__': '__main__',
-    '__package__': 'printobject',
-    'absolute_import': _Feature((2, 5, 0, 'alpha', 1), (3, 0, 0, 'alpha', 0), 16384),
-    'defaults': ('Module',),
-    're': <module 're' from '/home/user/code/printobject/.tox/py33/lib/python3.3/re.py'>,
-    'sys': <module 'sys' (built-in)>,
-    'tests': [<function test_module at 0xb72d23d4>,
-              <function test_class at 0xb71c60bc>,
-              <function test_instance at 0xb71c6104>,
-              <function test_instance_collapsed at 0xb71c614c>,
-              <function test_class_old at 0xb71c6194>,
-              <function test_instance_old at 0xb71c61dc>,
-              <function test_instance_old_collapsed at 0xb71c6224>,
-              <function test_function at 0xb71c626c>,
-              <function test_method at 0xb71c62b4>,
-              <function test_lambda at 0xb71c62fc>,
-              <function test_iterable at 0xb71c6344>,
-              <function test_generator at 0xb71c638c>]}
+     '___type___': '<module {id0}>',
+     '__builtins__': <module 'builtins' (built-in)>,
+     '__cached__': None,
+     '__file__': '/home/user/code/printobject/printobject/demos.py',
+     '__loader__': <_frozen_importlib.SourceFileLoader object at 0xb71c520c>,
+     '__name__': '__main__',
+     '__package__': 'printobject',
+     'absolute_import': _Feature((2, 5, 0, 'alpha', 1), (3, 0, 0, 'alpha', 0), 16384),
+     'defaults': ('Module',),
+     're': <module 're' from '/home/user/code/printobject/.tox/py33/lib/python3.3/re.py'>,
+     'sys': <module 'sys' (built-in)>,
+     'tests': [<function test_module at 0xb72d23d4>,
+               <function test_class at 0xb71c60bc>,
+               <function test_instance at 0xb71c6104>,
+               <function test_instance_collapsed at 0xb71c614c>,
+               <function test_class_old at 0xb71c6194>,
+               <function test_instance_old at 0xb71c61dc>,
+               <function test_instance_old_collapsed at 0xb71c6224>,
+               <function test_function at 0xb71c626c>,
+               <function test_method at 0xb71c62b4>,
+               <function test_lambda at 0xb71c62fc>,
+               <function test_iterable at 0xb71c6344>,
+               <function test_generator at 0xb71c638c>]}

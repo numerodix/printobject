@@ -115,6 +115,7 @@ class Dumper(object):
             ret[att] = val
             if not norec:
                 ret[att] = self.dump_main(val, visited)
+
         return ret
 
     def dump_repr(self, obj, visited):
