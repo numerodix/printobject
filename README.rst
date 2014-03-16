@@ -41,8 +41,9 @@ Key points:
   class attributes.
 - Callables are omitted when introspecting objects. The goal is to visualize
   the data in objects.
-- The synthetic attributes ``___name___`` and ``___type___`` are included
-  so as to provide some metadata about the object being printed.
+- The synthetic attributes ``___name___`` and ``___type___`` (yes, that's three
+  underscores!!!) are included in order to provide some metadata about the
+  object being printed.
 
 
 Modules
