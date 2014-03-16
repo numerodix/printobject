@@ -82,3 +82,21 @@ at top level because they are callables.
                <function test_lambda at 0xb71c62fc>,
                <function test_iterable at 0xb71c6344>,
                <function test_generator at 0xb71c638c>]}
+
+
+Classes
+^^^^^^^
+
+.. code:: python
+
+    >>> from printobject import pp
+    >>> class Node(object):
+    >>>     classatt = 'hidden'
+    >>>     def __init__(self, name):
+    >>>         self.name = name
+    >>> pp(Node)
+    {'___name___': 'Node',
+     '___type___': '<type {id0}>',
+     '__weakref__': {'___name___': '__weakref__',
+                     '___type___': '<getset_descriptor {id1}>'},
+     'classatt': "'hidden'"}
