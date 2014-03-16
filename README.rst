@@ -293,9 +293,10 @@ in the output.
 
 .. code:: python
 
-    >>> from printobject import Dumper
-    >>> it = frozenset(range(10))
     >>> pp(it)
+
+    >>> from printobject import pp
+    >>> it = frozenset(range(10))
 
     ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
@@ -311,5 +312,8 @@ if the generator is infinite the function will never return.
 .. code:: python
 
     >>> gen = (x for x in range(10))
+
+    >>> from printobject import pp
     >>> pp(gen)
+
     ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
