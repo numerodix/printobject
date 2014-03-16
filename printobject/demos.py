@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 import re
 import sys
 
@@ -57,7 +59,8 @@ def test_instance_old(heading="Instance (old style)"):
     d.refs = [c]
     return a
 
-def test_instance_old_collapsed(heading="Instance (old style) {collapsed recursion}",
+def test_instance_old_collapsed(heading=
+                                "Instance (old style) {collapsed recursion}",
                                 collapse_duplicates=True):
     """classatt shows up in dir()"""
     Node = test_class_old()
