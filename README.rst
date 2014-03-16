@@ -198,6 +198,8 @@ identity as ``instance`` type, which is visible in the
     >>> b.refs = [c]
     >>> c.refs = [a]
     >>> d.refs = [c]
+
+    >>> from printobject import pp
     >>> pp(a)
 
     {'___type___': '<instance {id0}>',
@@ -247,3 +249,36 @@ In collapsed form:
              'classatt': "'hidden'",
              'name': "'D'",
              'refs': ['dup <instance {id2}>']}]}
+
+
+Callables
+^^^^^^^^^
+
+Callables can also be printed, but they are less interesting since they
+have no public attributes.
+
+
+Functions:
+
+.. code:: python
+
+    >>> from printobject import pp
+    >>> pp(pp)
+    {'___name___': 'pp', '___type___': '<function {id0}>'}
+
+
+Methods:
+
+.. code:: python
+
+    >>> from printobject import Dumper
+    >>> pp(Dumper.dump)
+    {'___name___': 'dump', '___type___': '<instancemethod {id0}>'}
+
+
+Lambdas:
+
+.. code:: python
+
+    >>> pp(lambda x: x)
+    {'___name___': '<lambda>', '___type___': '<function {id0}>'}
