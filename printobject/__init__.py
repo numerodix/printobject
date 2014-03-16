@@ -1,4 +1,6 @@
-from prettyprinter import *  # noqa
+from __future__ import absolute_import
+
+from printobject.prettyprinter import *  # noqa
 
 
 __version__ = '0.1.0'
