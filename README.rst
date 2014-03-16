@@ -89,14 +89,44 @@ Classes
 
 .. code:: python
 
-    >>> from printobject import pp
     >>> class Node(object):
     >>>     classatt = 'hidden'
     >>>     def __init__(self, name):
     >>>         self.name = name
+
+    >>> from printobject import pp
     >>> pp(Node)
+
     {'___name___': 'Node',
      '___type___': '<type {id0}>',
      '__weakref__': {'___name___': '__weakref__',
                      '___type___': '<getset_descriptor {id1}>'},
      'classatt': "'hidden'"}
+
+
+Instances
+^^^^^^^^^
+
+.. code:: python
+
+    >>> a, b, c, d = Node('A'), Node('B'), Node('C'), Node('D')
+    >>> a.refs = [b, d]
+    >>> b.refs = [c]
+    >>> c.refs = [a]
+    >>> d.refs = [c]
+
+    >>> from printobject import pp
+    >>> pp(a)
+
+    >>> {'___type___': '<Node {id0}>',
+    >>>  'name': "'A'",
+    >>>  'refs': [{'___type___': '<Node {id1}>',
+    >>>            'name': "'B'",
+    >>>            'refs': [{'___type___': '<Node {id2}>',
+    >>>                      'name': "'C'",
+    >>>                      'refs': ['dup <Node {id0}>']}]},
+    >>>           {'___type___': '<Node {id3}>',
+    >>>            'name': "'D'",
+    >>>            'refs': [{'___type___': '<Node {id2}>',
+    >>>                      'name': "'C'",
+    >>>                      'refs': ['dup <Node {id0}>']}]}]}
