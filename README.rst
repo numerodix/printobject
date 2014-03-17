@@ -11,7 +11,7 @@ printobject
         :target: https://pypi.python.org/pypi/printobject/
 
 
-Python version support: CPython 2.6, 2.7, 3.2, 3.3 and PyPy.
+Python version support: CPython 2.6, 2.7, 3.2, 3.3, 3.4 and PyPy.
 
 
 Installation
